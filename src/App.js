@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from "react-router-dom";
+import shortid from 'shortid';
+import Header from './components/header/Header';
+import Navbar from './components/main/navbar/Navbar'
+import { DialogsContainer } from './components/main/dialogs/DialogsContainer';
+import { ProfileContainerWrapper } from './components/main/profile/ProfileContainer'
+import Contacts from './components/main/contacts/Contacts'
+import { UsersContainerWrapper } from './components/main/users/UsersContainer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+
+function App(props) {
+	
+	
+	return (
+		<div className="App wrapper">
+
+			<Header />
+
+			<main className="main">
+				<div className='main__container'>
+					<Navbar  />
+
+					<Routes>
+						<Route key={shortid.generate()} path="/profile/*" element={<ProfileContainerWrapper />} />
+						<Route key={shortid.generate()} path="/dialogs/*" element={<DialogsContainer />} />
+						<Route key={shortid.generate()} path="/contacts" element={<Contacts />} />
+						<Route key={shortid.generate()} path="/users" element={<UsersContainerWrapper />} />
+						
+					</Routes>
+
+
+				</div>
+			</main>
+
+
+
+		</div>
+	);
+};
+
+
 
 export default App;

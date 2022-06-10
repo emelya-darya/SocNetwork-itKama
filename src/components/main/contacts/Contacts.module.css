@@ -1,0 +1,19 @@
+.contacts{
+	width: 100%;
+	background: grey;
+}
+
+.contacts ul{
+	padding-right: 30px;
+	list-style: none;
+}
+
+.contact a{
+	font-size: 15px;
+	color: #fff;
+}
+
+.contact a:hover{
+	text-decoration: underline;
+	color: #fff;
+}

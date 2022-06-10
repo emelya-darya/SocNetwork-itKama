@@ -1,0 +1,16 @@
+.header{
+	flex: 0 1 auto;
+	height: 60px;
+	background-color: #008000;
+}
+
+.header__container {
+	max-width: 1100px;
+	padding: 15px;
+	margin: 0px auto;
+}
+
+
+.header__logo img{
+	width: 50px;
+}

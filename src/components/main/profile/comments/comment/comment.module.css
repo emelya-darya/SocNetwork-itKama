@@ -1,0 +1,42 @@
+.comment{
+	display: flex;
+	gap: 40px;
+	align-items: center;
+}
+
+.comment:not(:last-child){
+	margin-bottom: 40px;
+}
+
+
+.avatar__photoWrapper{
+	position: relative;
+	margin-bottom: 20px;
+	width: 90px;
+	height: 90px;
+	background-color: black;
+	border-radius: 50%;
+}
+
+.photo-wrapper img{
+	position: absolute; top: 0; left: 0;
+	width: 100%; height: 100%;
+	object-fit: cover;
+}
+
+.author{
+	text-align: center;
+	font-size: 15px;
+	font-weight: 500;
+	color: black;
+}
+
+.likes{
+	color: #000;
+	font-weight: 600;
+	text-align: center;
+}
+
+.message {
+	padding: 15px 30px;
+}

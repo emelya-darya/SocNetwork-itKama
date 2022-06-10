@@ -1,0 +1,70 @@
+.wrapper{
+	position: relative;
+	width: 100%;
+}
+
+.usersPagination{
+	margin-bottom: 30px;
+	width: 100%;
+	padding: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.pageNumber,
+.arrow {
+	display: flex;
+	justify-content: center; align-items: center;
+	background-color: green;
+	padding: 3px 7px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.pageNumber.activePage{
+	background-color: #000;
+}
+
+.arrow{
+	background-color: #000;
+}
+
+.pagesDots{
+	display: inline-block;
+	padding: 3px 7px;
+}
+
+.pageNumber:hover{
+	background-color: #000;
+}
+
+
+
+.users{
+	margin-bottom: 30px;
+}
+
+.userLink:not(:last-child){
+	display: block;
+	margin-bottom: 15px;
+	text-decoration: none;
+	color: #000;
+}
+
+.btn{
+	display: flex;
+	justify-content: center; align-items: center;
+	width: 400px;
+	height: 50px;
+	margin: 0px auto;
+	background-color: #AE81FF;
+	font-size: 35px;
+}
+
+.btn:hover{
+	background-color: #000;
+	color: #fff;
+}

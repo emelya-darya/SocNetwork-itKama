@@ -1,0 +1,32 @@
+
+.sidebar{
+	flex: 0 0 230px;
+	padding: 40px 15px;
+	background-color: yellow;
+}
+
+
+.navbar{
+	margin-bottom: 40px;
+}
+
+.navbar__list{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	list-style: none;
+	padding: 10px;
+}
+
+.navbar__link{
+	font-size: 16px;
+	color: #000;
+	text-decoration: none;
+	padding: 3px;
+}
+
+.act{
+	text-decoration: underline;
+	background-color: rgba(0, 0, 0, .2) ;
+	color: #000;
+}

@@ -1,0 +1,61 @@
+.main__useriInfo{
+	display: flex;
+	gap: 40px;
+	align-items: center;
+}
+
+.userInfo__avatar{
+	position: relative;
+	width: 150px; height: 150px;
+}
+
+.userInfo__avatar img{
+	position: absolute; top: 0; left: 0;
+	width: 100%; height: 100%;
+	object-fit: cover;
+}
+.userInfo__text{
+	font-weight: 500;
+}
+
+.description{
+	font-size: 15px;
+}
+
+.description:not(:last-child){
+	margin-bottom: 40px;
+}
+
+.name{
+	margin-bottom: 25px;
+	font-size: 20px;
+	font-weight: 600;
+	font-style: italic;
+}
+
+.workSearch span{
+	font-size: 17px;
+}
+
+.workSearch span.yes{
+	color: green;
+}
+
+.workSearch span.no{
+	color: red;
+}
+
+.contacts{
+	line-height: .8;
+	font-size: 15px;
+}
+
+.contactsTitle{
+	margin-bottom: 10px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.contact span{
+	font-style: italic;
+}
