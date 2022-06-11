@@ -1,16 +1,24 @@
-import './Header.module.css'
+import logo from '../../assets/img/logo.png'
+import { AuthInfo } from './AuthInfo/AuthInfo'
 import classes from './Header.module.css'
 
-function Header() {
+
+const Header = function (props) {
 	return (
 		<header className={`${classes.App__header} ${classes.header}`}>
 			<div className={classes.header__container}>
 				<a href="#fd" className={classes.header__logo}>
-					<img src="https://flyclipart.com/thumb2/png-logo-design-transparent-logo-design-images-489321.png" alt="logo" />
+					<img src={logo} alt="logo" />
 				</a>
+
+				<div className={classes.authInfo}>
+
+					<AuthInfo {...props} />
+
+				</div>
 			</div>
 		</header>
 	)
 }
 
-export default Header
+export {Header}

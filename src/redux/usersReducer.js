@@ -40,7 +40,6 @@ const usersReducer = function (state = initialState, action) {
 				return stateCopy
 		
 		case ('SET_USERS'):
-			
 			stateCopy = { ...state, usersData: [...action.users] }
 			return stateCopy
 

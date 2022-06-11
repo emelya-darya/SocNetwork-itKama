@@ -1,8 +1,9 @@
 import React from "react"
-import * as axios from 'axios'
 import { connect } from "react-redux"
 import { followToggleAC, setUsersAC, changePageAC, setTotalUsersCountAC, isDataLoadingAC } from "../../../redux/usersReducer"
 import { Users } from "./Users"
+import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
+
 
 
 
@@ -13,10 +14,10 @@ class UsersContainer extends React.Component {
 		if (this.props.usersData.length === 0) {
 			this.props.isLoadingSpinnerImgShow(true)
 
-			axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+			usersFetchingAPI.getUsers(this.props.currentPage, this.props.pageSize)
 				.then(responce => {
-					this.props.setTotalUsersCount(responce.data.totalCount)
-					this.props.setUsers(responce.data.items)
+					this.props.setTotalUsersCount(responce.totalCount)
+					this.props.setUsers(responce.items)
 
 					this.props.isLoadingSpinnerImgShow(false)
 				})
@@ -30,9 +31,9 @@ class UsersContainer extends React.Component {
 		
 		await this.props.setNumberPage(numberPage)
 
-		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+		usersFetchingAPI.getUsers(this.props.currentPage, this.props.pageSize)
 			.then(responce => {
-				this.props.setUsers(responce.data.items)
+				this.props.setUsers(responce.items)
 				this.props.isLoadingSpinnerImgShow(false)
 			})
 	}

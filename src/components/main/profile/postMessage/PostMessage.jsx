@@ -3,7 +3,7 @@ import React from 'react'
 import classes from './PostMessage.module.css'
 
 
-export default function PostMessage(props) {
+const PostMessage = function(props) {
 
 	const textField = React.createRef()
 
@@ -26,7 +26,6 @@ export default function PostMessage(props) {
 	}
 
 
-
 	return (
 		<div className={classes.message}>
 			<p className={classes.message__title}>Введите сообщение:</p>
@@ -37,3 +36,5 @@ export default function PostMessage(props) {
 		</div>
 	)
 }
+
+export {PostMessage}

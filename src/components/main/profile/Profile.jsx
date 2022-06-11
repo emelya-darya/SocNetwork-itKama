@@ -1,23 +1,22 @@
 
 import React from "react";
 import classes from "./Profile.module.css"
-import { CommentsContainer } from "./comments/CommentsContainer";
-import { PostMessageContainer } from "./postMessage/postMessageContainer";
+import {PostMessage} from './postMessage/PostMessage'
 import {UserInfo} from "./userInfo/UserInfo";
+import { Comments } from "./comments/Comments";
 
 
 
 const Profile = function (props) {
-	// console.log(props.profile);
 
 	return (
 		<div className={`${classes.main__profile} ${classes.profile}`}>
 
-			<UserInfo profile={props.profile} />
+			<UserInfo profile={props.forProfile.profile} />
 
-			<PostMessageContainer store={props} />
+			<PostMessage onAddComment={props.forProfile.onAddComment} onChangeComment={props.forProfile.onChangeComment}/>
 
-			<CommentsContainer store={props} />
+			<Comments comments={props.forProfile.comments} />
 		</div>
 	)
 }

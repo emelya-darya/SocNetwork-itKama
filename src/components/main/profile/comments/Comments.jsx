@@ -4,9 +4,9 @@ import shortid from "shortid";
 
 
 
-export default function Comments(props) {
+const Comments = function (props) {
 
-	const comments = props.commentsData.map(
+	const comments = props.comments.map(
 		comment =>
 			<Comment key={shortid.generate()} name={comment.name} message={comment.message} likesCount={comment.likesCount} id={comment.id} />
 	)
@@ -19,3 +19,5 @@ export default function Comments(props) {
 		</div>
 	)
 }
+
+export {Comments}
