@@ -10,10 +10,9 @@ import { LoadingBG } from "../../common/loading/LoadingBG"
 
 //! компонента, выполняющая запрос на сервак
 const ProfileContainer = function (props) {
-
 	let userId = useParams().userId
-	if(!userId) userId = 2
-	
+	if (!userId) userId = 2
+
 	useEffect(() => {
 		axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userId)
 			.then(responce => props.setProfile(responce.data))

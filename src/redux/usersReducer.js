@@ -33,9 +33,6 @@ const usersReducer = function (state = initialState, action) {
 					user.fetchingFollowingProgress = false
 					return user
 				})]
-
-				// toggleFollowingStatus: [...action.users.map(obj => ({ id: obj.id, toggleFollowinginProgress: false })
-				// )]
 			}
 			return stateCopy
 
@@ -56,7 +53,7 @@ const usersReducer = function (state = initialState, action) {
 			stateCopy = {
 				...state,
 				...state.usersData.map(user => {
-					if (action.id == user.id) user.fetchingFollowingProgress = action.isInProgress
+					if (action.userId == user.id) user.fetchingFollowingProgress = action.isInProgress
 					return user
 				})
 			}
@@ -98,9 +95,27 @@ const isDataLoadingAC = function (isLoading) {
 	return { type: IS_DATA_LOADING, isLoading: isLoading }
 }
 
-const inProgressToggleFollowAC = function (id, isInProgress) {
-	return { type: IN_PROGRESS_TOGGLE_FOLLOW_UNFOLLOW, id: id, isInProgress: isInProgress }
+const inProgressToggleFollowAC = function (userId, isInProgress) {
+	return { type: IN_PROGRESS_TOGGLE_FOLLOW_UNFOLLOW, userId: userId, isInProgress: isInProgress }
 }
+
+// const getUsersThunkCreator = function () {
+	
+// 	dispatch(isDataLoadingAC(true))
+		
+
+// 		usersFetchingAPI.getUsers(props.currentPage, props.pageSize)
+// 			.then(responce => {
+// 				props.setTotalUsersCount(responce.totalCount)
+// 				props.setUsers(responce.items)
+// 			})
+// 			.then(props.isLoadingSpinnerImgShow(false))
+	
+// }
+
+
+
+
 
 
 export { usersReducer }

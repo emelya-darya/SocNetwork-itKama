@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { followToggleAC, setUsersAC, changePageAC, setTotalUsersCountAC, isDataLoadingAC, inProgressToggleFollowAC } from "../../../redux/usersReducer"
 import { Users } from "./Users"
@@ -7,69 +7,49 @@ import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
 
 
 
-//! В этой компоненте логика взаимодействия со стором (сетевые запросы и изменение currentPage в сторе)
-class UsersContainer extends React.Component {
-	componentDidMount() {  // сработает только при первом рендеринге
-		if (this.props.usersData.length === 0) {
-			this.props.isLoadingSpinnerImgShow(true)
+// В этой компоненте логика взаимодействия со стором (сетевые запросы и изменение currentPage в сторе)
+//!В этой компоненте взаимодействие со store
+const UsersContainer = function (props) {
+	
+	useEffect(() => {
+		if (props.usersData.length === 0) {
+			props.isLoadingSpinnerImgShow(true)
 
-			usersFetchingAPI.getUsers(this.props.currentPage, this.props.pageSize)
+			usersFetchingAPI.getUsers(props.currentPage, props.pageSize)
 				.then(responce => {
-					this.props.setTotalUsersCount(responce.totalCount)
-					this.props.setUsers(responce.items)
-
-					this.props.isLoadingSpinnerImgShow(false)
+					props.setTotalUsersCount(responce.totalCount)
+					props.setUsers(responce.items)
 				})
+				.then(props.isLoadingSpinnerImgShow(false))
 		}
-	}
+	}, [])
 
-
-	onSetPage = async (numberPage) => {
-
-		this.props.isLoadingSpinnerImgShow(true)
+	const setPage = (numberPage) => {
+		props.isLoadingSpinnerImgShow(true)
 		
-		await this.props.setNumberPage(numberPage)
-
-		usersFetchingAPI.getUsers(this.props.currentPage, this.props.pageSize)
+		usersFetchingAPI.getUsers(numberPage, props.pageSize)
 			.then(responce => {
-				this.props.setUsers(responce.items)
-				this.props.isLoadingSpinnerImgShow(false)
+				props.setUsers(responce.items)
+				props.setNumberPage(numberPage) 
+				props.isLoadingSpinnerImgShow(false)
 			})
 	}
 
-	onPrevPage = () => {
-		let prevPage = this.props.currentPage - 1
-		this.onSetPage(prevPage <= 0 ? 1 : prevPage)
-	}
-
-	onNextPage = () => {
-		let nextPage = this.props.currentPage + 1
-		this.onSetPage(nextPage > this.props.pagesCount ? this.props.pagesCount : nextPage)
-	}
-
-
-	render() {
-
-		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-
-		return <Users
-			pagesCount={pagesCount}
-			onSetPage={this.onSetPage}
-			onPrevPage={this.onPrevPage}
-			onNextPage={this.onNextPage}
-			currentPage={this.props.currentPage}
-			onChangeFollowStat={this.props.onChangeFollowStat}
-			usersData={this.props.usersData}
-			isLoading={this.props.isLoading}
-			onBlockButtonWhenFetch={this.props.onBlockButtonWhenFetch}
-
+	return <Users	
+		setPage={setPage}
+		usersData={props.usersData}
+		onChangeFollowStat={props.onChangeFollowStat}
+		onBlockButtonWhenFetch={props.onBlockButtonWhenFetch}
+		totalUsersCount={props.totalUsersCount}
+		pageSize={props.pageSize}
+		currentPage={props.currentPage}
 		/>
-	}
+	
 }
 
 
 
-//! В этой компоненте есть информация о store
+//! В этой компоненте есть информация о redux store
 const mapStateToProps = function (state) {
 	return {
 		usersData: state.forUsersData.usersData,

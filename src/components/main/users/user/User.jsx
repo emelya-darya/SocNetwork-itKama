@@ -3,38 +3,34 @@ import userPhoto from '../../../../assets/img/user.jpg'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { usersFetchingAPI } from '../../../../DAL/fetchingAPI'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
 const User = function (props) {
 
-	
 	const onChangeFollowing = function () {
 		props.onBlockButtonWhenFetch(props.id, true)
 		usersFetchingAPI.onChangeFollowingAPI(props.isFollowed, props.id, props.onChangeFollowStat)
-			.then(props.onBlockButtonWhenFetch(props.id, false))
+			.then(props.onBlockButtonWhenFetch(props.id, false))	
 	}
 
-
-	let progFolStat = props.isFetchingFollow
-	
 	return (
 
 		<div className={classes.user} >
 
 			<div className={classes.avatarAndBtn}>
 
-				<NavLink to={'/profile/' + props.id} className={classes.userLink}>
+				<NavLink to={props.id && '/profile/' + props.id} className={classes.userLink}>
 					<div className={classes.avatar}>
 						<img src={props.photoBigSrc ? props.photoBigSrc : userPhoto} />
 					</div>
 				</NavLink>
 
 
-				<button disabled={progFolStat}
+				<button disabled={props.isFetchingFollow}
 					className={`${props.isFollowed ? classes.btnUnfollow : classes.btnFollow} 
-									${progFolStat ? classes.disabledBtn:''}`}
+									${props.isFollowed ? classes.disabledBtn : ''}`}
 					onClick={onChangeFollowing}>
 					<span>{props.isFollowed ? 'Unfollow' : 'Follow'}</span>
 				</button>

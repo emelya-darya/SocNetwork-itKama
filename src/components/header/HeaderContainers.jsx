@@ -12,14 +12,16 @@ const HeaderContainer = function (props) {
 	useEffect(() => {
 		props.isFetching(true)
 		authFetchingAPI.onCheckAuth()
-			.then(responce => { if (responce.resultCode === 0) props.setAuth(responce.data) })
-			.then(
-				authFetchingAPI.getAvatar(props.authData.id)
-					.then(responce => { if (props.authData.isAuth) props.setAvatar(responce.data.photos.small) })
-					
-			
+			.then(responce => { if (responce.resultCode === 0 ) props.setAuth(responce.data) })
+			.then(() => {
+				if (props.authData.isAuth) {
+					authFetchingAPI.getAvatar(props.authData.id)
+				 	.then(responce => { if (props.authData.isAuth) props.setAvatar(responce.data.photos.small) })
+				}
+			}
 		)
 			.then(props.isFetching(false))
+			.catch(err=>console.log(err.message))	
 	}, [])
 
 	return <Header {...props} />

@@ -40,7 +40,7 @@ const authFetchingAPI = {
 
 	getAvatar(id) {
 		return instance.get(`profile/${id}`)
-				.then(responce => responce.data)
+			.then(responce => responce.data)
 	}
 }
 
