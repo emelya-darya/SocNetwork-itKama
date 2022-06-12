@@ -12,22 +12,25 @@ const instance = axios.create({
 
 const usersFetchingAPI = {
 	// подписка-отписка
-	onChangeFollowingAPI(isFollowed, userId, onChangeFollowStat) {
-		let id = userId
-
-		if (!isFollowed) {
-			return instance.post(`follow/${id}`, null )
-				.then(responce => { if (responce.data.resultCode == 0) onChangeFollowStat(id) })
-		} else {
-			return instance.delete(`follow/${id}`)
-				.then(responce => { if (responce.data.resultCode == 0) onChangeFollowStat(id) })
-		}
+	onUnfollowAPI(id) {
+		return instance.post(`follow/${id}`)
+			.then(responce => { if (responce.data.resultCode == 0) return responce })
 	},
+
+	onFollowAPI(id) {
+		return instance.delete(`follow/${id}`)
+			.then(responce => { if (responce.data.resultCode == 0) return responce })
+	},
+
 
 	// получение пользователей при загрузке компоненты users и при пагинации
 	getUsers(currentPage, pageSize) {
+		
 		return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-			.then(responce => responce.data)
+			.then(responce => {
+				return responce.data
+			})
+			
 	}
 }
 
@@ -44,7 +47,18 @@ const authFetchingAPI = {
 	}
 }
 
+const profileFetchingAPI = {
+
+	onShowProfile(userId) {
+		return instance.get(`profile/${userId}`)
+	} 
+	
+
+
+}
+
 
 
 export { usersFetchingAPI }
 export { authFetchingAPI }
+export { profileFetchingAPI }

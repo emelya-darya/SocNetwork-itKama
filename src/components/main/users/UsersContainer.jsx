@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { followToggleAC, setUsersAC, changePageAC, setTotalUsersCountAC, isDataLoadingAC, inProgressToggleFollowAC } from "../../../redux/usersReducer"
+import {  getUsersThunkCreator, setPageThunkCreator, changeFollowingThunkCreator } from "../../../redux/usersReducer"
 import { Users } from "./Users"
-import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
 
 
 
@@ -12,39 +12,17 @@ import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
 const UsersContainer = function (props) {
 	
 	useEffect(() => {
-		if (props.usersData.length === 0) {
-			props.isLoadingSpinnerImgShow(true)
-
-			usersFetchingAPI.getUsers(props.currentPage, props.pageSize)
-				.then(responce => {
-					props.setTotalUsersCount(responce.totalCount)
-					props.setUsers(responce.items)
-				})
-				.then(props.isLoadingSpinnerImgShow(false))
-		}
+		if (props.usersData.length === 0) props.getUsers(props.currentPage, props.pageSize)
 	}, [])
 
-	const setPage = (numberPage) => {
-		props.isLoadingSpinnerImgShow(true)
-		
-		usersFetchingAPI.getUsers(numberPage, props.pageSize)
-			.then(responce => {
-				props.setUsers(responce.items)
-				props.setNumberPage(numberPage) 
-				props.isLoadingSpinnerImgShow(false)
-			})
-	}
-
 	return <Users	
-		setPage={setPage}
+		setPage={props.setPage}
 		usersData={props.usersData}
-		onChangeFollowStat={props.onChangeFollowStat}
-		onBlockButtonWhenFetch={props.onBlockButtonWhenFetch}
+		changeFolowStat={props.changeFolowStat}
 		totalUsersCount={props.totalUsersCount}
 		pageSize={props.pageSize}
 		currentPage={props.currentPage}
 		/>
-	
 }
 
 
@@ -91,6 +69,21 @@ const mapDispatchToProps = function (dispatch) {
 		onBlockButtonWhenFetch(id, isInProgress) {
 			let action = inProgressToggleFollowAC(id, isInProgress)
 			dispatch(action)
+		},
+
+		getUsers(currentPage, pageSize) {
+			let thunkCreator = getUsersThunkCreator(currentPage, pageSize)
+			dispatch(thunkCreator)
+		},
+
+		setPage(numberPage, pageSize) {
+			let thunkCreator = setPageThunkCreator(numberPage, pageSize)
+			dispatch(thunkCreator)
+		},
+
+		changeFolowStat(id, isFollowed) {
+			let thunkCreator = changeFollowingThunkCreator(id, isFollowed)
+			dispatch(thunkCreator)
 		}
 
 	}

@@ -1,3 +1,5 @@
+import { profileFetchingAPI } from "../DAL/fetchingAPI"
+
 const ADD_COMMENT = 'ADD-COMMENT'
 const CHANGE_TEXT_COMMENT = 'CHANGE-TEXT-COMMENT'
 const SET_PROFILE = 'SET_PROFILE'
@@ -76,8 +78,16 @@ const setProfileAC = function (profile) {
 	return { type: SET_PROFILE, profile: profile }
 }
 
+const showProfileThunkCreator = function (userId) {
+	return function (dispatch) {
+		profileFetchingAPI.onShowProfile(userId)
+			.then(responce => dispatch(setProfileAC(responce.data)))
+	}
+}
+
 
 export { profileReducer }
 export { addCommentAC }
 export { changeTextCommentAC }
 export { setProfileAC }
+export { showProfileThunkCreator }

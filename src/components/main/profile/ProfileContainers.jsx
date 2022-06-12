@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { useParams } from 'react-router-dom'
 import { setProfileAC, addCommentAC, changeTextCommentAC } from "../../../redux/profileReducer"
+import { showProfileThunkCreator } from "../../../redux/profileReducer"
 import axios from "axios"
 import { Profile } from "./Profile"
 import { LoadingBG } from "../../common/loading/LoadingBG"
@@ -14,8 +15,7 @@ const ProfileContainer = function (props) {
 	if (!userId) userId = 2
 
 	useEffect(() => {
-		axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + userId)
-			.then(responce => props.setProfile(responce.data))
+		props.showProfile(userId)
 	}, [])
 
 
@@ -50,6 +50,11 @@ const mapDispatchToProps = function (dispatch) {
 		onChangeComment(field) {
 			let action = changeTextCommentAC(field)
 			dispatch(action)
+		},
+
+		showProfile(userId) {
+			let thunkCreator = showProfileThunkCreator(userId)
+			dispatch(thunkCreator)
 		}
 	}
 }

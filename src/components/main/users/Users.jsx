@@ -14,8 +14,7 @@ const Users = function (props) {
 	let usersList = props.usersData.map(us => {
 		return (
 			<User
-				onChangeFollowStat={props.onChangeFollowStat}
-				onBlockButtonWhenFetch={props.onBlockButtonWhenFetch}
+				changeFolowStat={props.changeFolowStat}
 				key={shortid.generate()}
 				name={us.name}
 				status={us.status}
@@ -43,7 +42,7 @@ const Users = function (props) {
 					variant="outlined"
 					shape="rounded"
 					page={props.currentPage}
-					onChange={(event, numberPage) => { props.setPage(numberPage)}} />
+					onChange={(event, numberPage) => { props.setPage(numberPage,props.pageSize)}} />
 			</div>
 			<div className={classes.users}>
 

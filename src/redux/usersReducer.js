@@ -1,3 +1,5 @@
+import { usersFetchingAPI, authFetchingAPI } from "../DAL/fetchingAPI"
+
 const TOGGLE_FOLLOW_UNFOLLOW = 'TOGGLE_FOLLOW_UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const CHANGE_PAGE = 'CHANGE_PAGE'
@@ -48,7 +50,7 @@ const usersReducer = function (state = initialState, action) {
 				})],
 			}
 			return stateCopy
-		
+
 		case (IN_PROGRESS_TOGGLE_FOLLOW_UNFOLLOW):
 			stateCopy = {
 				...state,
@@ -99,19 +101,51 @@ const inProgressToggleFollowAC = function (userId, isInProgress) {
 	return { type: IN_PROGRESS_TOGGLE_FOLLOW_UNFOLLOW, userId: userId, isInProgress: isInProgress }
 }
 
-// const getUsersThunkCreator = function () {
-	
-// 	dispatch(isDataLoadingAC(true))
-		
 
-// 		usersFetchingAPI.getUsers(props.currentPage, props.pageSize)
-// 			.then(responce => {
-// 				props.setTotalUsersCount(responce.totalCount)
-// 				props.setUsers(responce.items)
-// 			})
-// 			.then(props.isLoadingSpinnerImgShow(false))
-	
-// }
+const getUsersThunkCreator = function (currentPage, pageSize) {
+	return function (dispatch) {
+		dispatch(isDataLoadingAC(true))
+
+		usersFetchingAPI.getUsers(currentPage, pageSize)
+			.then(responce => {
+				dispatch(setTotalUsersCountAC(responce.totalCount))
+				dispatch(setUsersAC(responce.items))
+			})
+
+			.then(dispatch(isDataLoadingAC(false)))
+	}
+}
+
+const setPageThunkCreator = (numberPage, pageSize) => {
+
+	return function (dispatch) {
+		dispatch(isDataLoadingAC(true))
+
+		usersFetchingAPI.getUsers(numberPage, pageSize)
+			.then(responce => {
+				dispatch(setUsersAC(responce.items))
+				dispatch(changePageAC(numberPage))
+				dispatch(isDataLoadingAC(false))
+			})
+	}
+}
+
+const changeFollowingThunkCreator = function (id, isFollowed) {
+
+	return function (dispatch) {
+		dispatch(inProgressToggleFollowAC(id, true))
+
+		if (!isFollowed) {
+			usersFetchingAPI.onFollowAPI(id)
+				.then(dispatch(followToggleAC(id)))
+				.then(dispatch(inProgressToggleFollowAC(id, false)))
+		} else {
+			usersFetchingAPI.onUnfollowAPI(id)
+				.then(dispatch(followToggleAC(id)))
+				.then(dispatch(inProgressToggleFollowAC(id, false)))
+		}
+	}
+}
 
 
 
@@ -125,3 +159,6 @@ export { changePageAC }
 export { setTotalUsersCountAC }
 export { isDataLoadingAC }
 export { inProgressToggleFollowAC }
+export { getUsersThunkCreator }
+export { setPageThunkCreator }
+export { changeFollowingThunkCreator }
