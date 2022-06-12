@@ -41,8 +41,8 @@
 	color: #fff;
 }
 
-.btnFollow{
-
+.disabledBtn{
+	opacity: .3;
 }
 
 .info{

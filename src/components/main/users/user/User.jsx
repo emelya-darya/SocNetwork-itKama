@@ -3,33 +3,22 @@ import userPhoto from '../../../../assets/img/user.jpg'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { usersFetchingAPI } from '../../../../DAL/fetchingAPI'
+import { useEffect } from 'react'
 
 
 
 const User = function (props) {
 
-
-	const onChangeFollowing = function () {
-		usersFetchingAPI.onChangeFollowingAPI(props.isFollowed, props.id, props.onChangeFollowStat)
-	}
 	
-
-	// const onChangeFollowing = function () {
-	// 	let id = props.id
-
-	// 	if (!props.isFollowed) {
-	// 		axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, null,
-	// 			{ withCredentials: true, headers: { "API-KEY": "ae76e4af-a97a-40e5-9331-26f02d2b6dce" } })
-	// 			.then(responce => { if (responce.data.resultCode == 0) props.onChangeFollowStat(id) })
-	// 	} else {
-	// 		axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`,
-	// 			{ withCredentials: true, headers: { "API-KEY": "ae76e4af-a97a-40e5-9331-26f02d2b6dce" } })
-	// 			.then(responce => { if (responce.data.resultCode == 0) props.onChangeFollowStat(id) })
-	// 	}
-
-	// }
+	const onChangeFollowing = function () {
+		props.onBlockButtonWhenFetch(props.id, true)
+		usersFetchingAPI.onChangeFollowingAPI(props.isFollowed, props.id, props.onChangeFollowStat)
+			.then(props.onBlockButtonWhenFetch(props.id, false))
+	}
 
 
+	let progFolStat = props.isFetchingFollow
+	
 	return (
 
 		<div className={classes.user} >
@@ -43,9 +32,12 @@ const User = function (props) {
 				</NavLink>
 
 
-				<div className={props.isFollowed ? classes.btnUnfollow : classes.btnFollow} onClick={onChangeFollowing}>
+				<button disabled={progFolStat}
+					className={`${props.isFollowed ? classes.btnUnfollow : classes.btnFollow} 
+									${progFolStat ? classes.disabledBtn:''}`}
+					onClick={onChangeFollowing}>
 					<span>{props.isFollowed ? 'Unfollow' : 'Follow'}</span>
-				</div>
+				</button>
 
 			</div>
 

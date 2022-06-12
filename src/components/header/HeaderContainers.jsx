@@ -13,7 +13,6 @@ const HeaderContainer = function (props) {
 		props.isFetching(true)
 		authFetchingAPI.onCheckAuth()
 			.then(responce => { if (responce.resultCode === 0) props.setAuth(responce.data) })
-			.then(console.log(props.authData.id))
 			.then(
 				authFetchingAPI.getAvatar(props.authData.id)
 					.then(responce => { if (props.authData.isAuth) props.setAvatar(responce.data.photos.small) })

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { followToggleAC, setUsersAC, changePageAC, setTotalUsersCountAC, isDataLoadingAC } from "../../../redux/usersReducer"
+import { followToggleAC, setUsersAC, changePageAC, setTotalUsersCountAC, isDataLoadingAC, inProgressToggleFollowAC } from "../../../redux/usersReducer"
 import { Users } from "./Users"
 import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
 
@@ -9,7 +9,6 @@ import { usersFetchingAPI } from "../../../DAL/fetchingAPI"
 
 //! В этой компоненте логика взаимодействия со стором (сетевые запросы и изменение currentPage в сторе)
 class UsersContainer extends React.Component {
-
 	componentDidMount() {  // сработает только при первом рендеринге
 		if (this.props.usersData.length === 0) {
 			this.props.isLoadingSpinnerImgShow(true)
@@ -62,6 +61,8 @@ class UsersContainer extends React.Component {
 			onChangeFollowStat={this.props.onChangeFollowStat}
 			usersData={this.props.usersData}
 			isLoading={this.props.isLoading}
+			onBlockButtonWhenFetch={this.props.onBlockButtonWhenFetch}
+
 		/>
 	}
 }
@@ -75,7 +76,7 @@ const mapStateToProps = function (state) {
 		pageSize: state.forUsersData.pageSize,
 		totalUsersCount: state.forUsersData.totalUsersCount,
 		currentPage: state.forUsersData.currentPage,
-		isLoading: state.forUsersData.isLoading
+		isLoading: state.forUsersData.isLoading,
 	}
 }
 
@@ -105,8 +106,12 @@ const mapDispatchToProps = function (dispatch) {
 		isLoadingSpinnerImgShow(isLoading) {
 			let action = isDataLoadingAC(isLoading)
 			dispatch(action)
-		}
+		},
 
+		onBlockButtonWhenFetch(id, isInProgress) {
+			let action = inProgressToggleFollowAC(id, isInProgress)
+			dispatch(action)
+		}
 
 	}
 }

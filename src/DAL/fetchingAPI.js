@@ -16,10 +16,10 @@ const usersFetchingAPI = {
 		let id = userId
 
 		if (!isFollowed) {
-			instance.post(`follow/${id}`, null )
+			return instance.post(`follow/${id}`, null )
 				.then(responce => { if (responce.data.resultCode == 0) onChangeFollowStat(id) })
 		} else {
-			instance.delete(`follow/${id}`)
+			return instance.delete(`follow/${id}`)
 				.then(responce => { if (responce.data.resultCode == 0) onChangeFollowStat(id) })
 		}
 	},
